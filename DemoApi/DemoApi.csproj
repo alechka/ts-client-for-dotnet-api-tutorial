@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server" Version="9.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Scalar.AspNetCore" Version="2.2.7" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="Build">
+      <Copy SourceFiles="$(ProjectDir)obj\DemoAPI.json" DestinationFolder="$(OutDir)" />
+      <Message Text="open api file copiied to $(OutDir)" Importance="high"/>
+  </Target>
+
+  <Target Name="CopyFilesToPublish" AfterTargets="Publish">
+      <Copy SourceFiles="$(OutDir)\DemoAPI.json" DestinationFolder="$(PublishDir)"/>
+  </Target> 
+
+</Project>
